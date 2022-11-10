@@ -30,7 +30,6 @@ import javax.ws.rs.core.SecurityContext;
 import facades.UserFacade;
 import utils.EMF_Creator;
 import utils.FactFetcher;
-import utils.HttpUtils;
 import utils.PokemonFetcher;
 
 
@@ -57,7 +56,6 @@ public class DemoResource {
         return "{\"msg\":\"Hello anonymous\"}";
     }
 
-    //Just to verify if the database is setup
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("all")
@@ -98,22 +96,13 @@ public class DemoResource {
     public String populateDB() {
         FACADE.populate();
         return "{\"msg\":\"DB populated\"}";
-
-
-//        try {
-//            TypedQuery<User> query = em.createQuery ("select u from User u",entities.User.class);
-//            List<User> users = query.getResultList();
-//            return "[" + users.size() + "]";
-//        } finally {
-//            em.close();
-//        }
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("pokemon")
-//    @RolesAllowed({"user", "admin"})
+    @RolesAllowed({"user", "admin"})
     public String getPokeInfo(String pokemon) throws IOException, ExecutionException, InterruptedException {
         String query;
         PokemonDTO pokemonDTO;
@@ -171,21 +160,11 @@ public class DemoResource {
         String username = json.get("userName").getAsString();
         String password = json.get("userPass").getAsString();
         User user = new User(username, password);
-//            if (!Objects.equals(newFullPersonDTO.getEmail(), null)
-//                    && !Objects.equals(newFullPersonDTO.getFirstName(), null)
-//                    && !Objects.equals(newFullPersonDTO.getLastName(), null)) {
-//                Person newPerson = new Person(newFullPersonDTO);
         User createdUser = FACADE.createUser(user);
 
         return GSON.toJson(createdUser);
-//            } else {
-//                List<String> msg = new ArrayList<>();
-//                if (Objects.equals(newFullPersonDTO.getFirstName(), null)) msg.add("Field \"First name\" is required. ");
-//                if (Objects.equals(newFullPersonDTO.getLastName(), null)) msg.add("Field \"Last name\" is required. ");
-//                if (Objects.equals(newFullPersonDTO.getEmail(), null)) msg.add("Field \"Email\" is required. ");
-//                throw new WebApplicationException(String.join("\n", msg), 400);
-//            }
-
     }
+
+    //TODO: Make endpoint to get anime (see AnimeFetcher)
 
 }
