@@ -1,10 +1,12 @@
 package facades;
 
+import entities.Anime;
 import entities.Role;
 import entities.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.ws.rs.WebApplicationException;
 
 import security.errorhandling.AuthenticationException;
 
@@ -45,44 +47,48 @@ public class UserFacade {
         return user;
     }
 
-    public void populate() {
+    public User createUser(User user) {
         EntityManager em = emf.createEntityManager();
-        User user = new User("user", "As123456");
-        User admin = new User("admin", "JK123456");
-        User both = new User("user_admin", "DQ123456");
-
-        if (admin.getUserPass().equals("test") || user.getUserPass().equals("test") || both.getUserPass().equals("test"))
-            throw new UnsupportedOperationException("You have not changed the passwords");
         em.getTransaction().begin();
         Role userRole = new Role("user");
-        Role adminRole = new Role("admin");
         user.addRole(userRole);
-        admin.addRole(adminRole);
-        both.addRole(userRole);
-        both.addRole(adminRole);
-        em.persist(userRole);
-        em.persist(adminRole);
         em.persist(user);
-        em.persist(admin);
-        em.persist(both);
         em.getTransaction().commit();
-//        System.out.println("PW: " + user.getUserPass());
-//        System.out.println("Testing user with OK password: " + user.verifyPassword("As123456"));
-//        System.out.println("Testing user with wrong password: " + user.verifyPassword("test1"));
-        System.out.println("Created TEST Users");
-
-
+        return user;
     }
 
+    public User addAnimeToWatchList(String username, Anime anime) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            User user = em.find(User.class, username);
+            user.getWatchlist().addAnimeToList(anime);
+            if (em.find(Anime.class, anime.getId()) == null) {
+                em.persist(anime);
+            } else {
+                em.merge(anime);
+            }
+            em.merge(user);
+            em.merge(user.getWatchlist());
+            em.getTransaction().commit();
+            return user;
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return null;
+        }
+    }
 
-    public User createUser(User user) {
-        User createdUser = user;
+    public User removeAnimeFromWatchList(String username, Integer animeID) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        Role userRole = new Role("user");
-        user.addRole(userRole);
-        em.persist(user);
+        User user = em.find(User.class, username);
+        Anime anime = em.find(Anime.class, animeID);
+        if (anime == null) throw new WebApplicationException("Watchlist item does not exist", 404);
+        user.getWatchlist().removeAnimeFromList(anime);
+        em.merge(user);
+        em.merge(anime);
+        em.merge(user.getWatchlist());
         em.getTransaction().commit();
-        return createdUser;
+        return user;
     }
 }

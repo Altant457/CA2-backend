@@ -3,6 +3,7 @@ package utils;
 
 import entities.Role;
 import entities.User;
+import entities.Watchlist;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -30,10 +31,16 @@ public class SetupTestUsers {
     em.getTransaction().begin();
     Role userRole = new Role("user");
     Role adminRole = new Role("admin");
+    Watchlist watchlist1 = new Watchlist();
+    Watchlist watchlist2 = new Watchlist();
+    user.setWatchlist(watchlist1);
+    both.setWatchlist(watchlist2);
     user.addRole(userRole);
     admin.addRole(adminRole);
     both.addRole(userRole);
     both.addRole(adminRole);
+    em.persist(watchlist1);
+    em.persist(watchlist2);
     em.persist(userRole);
     em.persist(adminRole);
     em.persist(user);

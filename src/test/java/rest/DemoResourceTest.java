@@ -2,6 +2,7 @@ package rest;
 
 import entities.Role;
 import entities.User;
+import entities.Watchlist;
 import io.restassured.RestAssured;
 import io.restassured.parsing.Parser;
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -71,11 +72,17 @@ class DemoResourceTest {
             Role adminRole = new Role("admin");
             User user = new User("user", "test1");
             user.addRole(userRole);
+            Watchlist watchlist1 = new Watchlist();
+            Watchlist watchlist2 = new Watchlist();
+            user.setWatchlist(watchlist1);
             User admin = new User("admin", "test2");
             admin.addRole(adminRole);
             User both = new User("user_admin", "test3");
+            both.setWatchlist(watchlist2);
             both.addRole(userRole);
             both.addRole(adminRole);
+            em.persist(watchlist1);
+            em.persist(watchlist2);
             em.persist(userRole);
             em.persist(adminRole);
             em.persist(user);

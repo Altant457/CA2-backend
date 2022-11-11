@@ -26,7 +26,7 @@ Content-Type: application/json
 }
 
 ### getMultiAnime
-POST http://localhost:8080/ca2/api/info/anime/multi
+GET http://localhost:8080/ca2/api/info/anime/multi
 Content-Type: application/json
 Accept: application/json
 
@@ -35,10 +35,36 @@ Accept: application/json
 }
 
 ### getSingleAnime
-POST http://localhost:8080/ca2/api/info/anime/single
+GET http://localhost:8080/ca2/api/info/anime/single
 Content-Type: application/json
 Accept: application/json
 
 {
   "query": "Cowboy Bebop"
+}
+
+###
+POST http://localhost:8080/ca2/api/info/user/watchlist/add
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "user",
+  "anime": {
+    "id": 162,
+    "name": "Initial D First Stage",
+    "year": "1998",
+    "status": "finished",
+    "posterURL": "https://media.kitsu.io/anime/poster_images/162/original.png"
+  }
+}
+
+###
+POST http://localhost:8080/ca2/api/info/user/watchlist/remove
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "user",
+  "animeId": 1
 }

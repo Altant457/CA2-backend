@@ -18,8 +18,8 @@ public class AnimeFetcher {
             throw new WebApplicationException("No anime found", 404);
         }
         for (int i = 0; i <= 19; i++) {
-            String id = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
-                    .get("id").getAsString();
+            Integer id = Integer.parseInt(json.get("data").getAsJsonArray().get(i).getAsJsonObject()
+                    .get("id").getAsString());
             String name = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                     .get("attributes").getAsJsonObject()
                     .get("canonicalTitle").getAsString();
@@ -41,8 +41,8 @@ public class AnimeFetcher {
     public static AnimeDTO getSingleData(String sname) throws IOException {
         String res = HttpUtils.fetchAnime(sname, false);
         JsonObject json = JsonParser.parseString(res).getAsJsonObject();
-        String id = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
-                .get("id").getAsString();
+        Integer id = Integer.parseInt(json.get("data").getAsJsonArray().get(0).getAsJsonObject()
+                .get("id").getAsString());
         String name = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
                 .get("attributes").getAsJsonObject()
                 .get("canonicalTitle").getAsString();

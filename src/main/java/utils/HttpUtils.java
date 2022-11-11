@@ -36,7 +36,7 @@ public class HttpUtils {
                 : "https://kitsu.io/api/edge/anime/?page%5Blimit%5D=1&filter%5Btext%5D=";
         Client client = ClientBuilder.newClient();
         String encodedFilter = URLEncoder.encode(filter, StandardCharsets.UTF_8.toString());
-        System.out.println(url+encodedFilter);
+        System.out.println("Request sent to: "+url+encodedFilter);
         Response response = client.target(url+encodedFilter).request().get();
         return response.readEntity(String.class);
     }

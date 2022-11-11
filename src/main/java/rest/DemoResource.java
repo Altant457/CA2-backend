@@ -4,10 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import dtos.AnimeDTO;
-import dtos.ComboDTO;
-import dtos.PokemonDTO;
-import dtos.RandomFactDTO;
+import dtos.*;
+import entities.Anime;
 import entities.User;
 
 import java.io.IOException;
@@ -91,15 +89,6 @@ public class DemoResource {
         return "{\"msg\": \"Hello to (admin) User: " + thisuser + "\"}";
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("populate")
-    @RolesAllowed({"admin"})
-    public String populateDB() {
-        FACADE.populate();
-        return "{\"msg\":\"DB populated\"}";
-    }
-
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -168,9 +157,8 @@ public class DemoResource {
     }
 
     //TODO: Make endpoints to get anime (see AnimeFetcher)
-    @POST
+    @GET
     @Path("anime/single")
-    @Consumes("application/json")
     @Produces("application/json")
     public String getSingleAnime(String input) throws IOException {
         String name = JsonParser.parseString(input).getAsJsonObject()
@@ -179,15 +167,38 @@ public class DemoResource {
         return GSON.toJson(animeDTO);
     }
 
-    @POST
+    @GET
     @Path("anime/multi")
-    @Consumes("application/json")
     @Produces("application/json")
     public String getMultiAnime(String input) throws IOException {
         String query = JsonParser.parseString(input).getAsJsonObject()
                 .get("query").getAsString();
         List<AnimeDTO> animeDTOs = AnimeFetcher.getMultiData(query);
         return GSON.toJson(animeDTOs);
+    }
+
+    @POST
+    @Path("user/watchlist/add")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public String addToWatchlist(String input) {
+        JsonObject json = JsonParser.parseString(input).getAsJsonObject();
+        String username = json.get("username").getAsString();
+        Anime anime = GSON.fromJson(json.get("anime").getAsJsonObject(), Anime.class);
+        UserDTO updatedUser = new UserDTO(FACADE.addAnimeToWatchList(username, anime));
+        return GSON.toJson(updatedUser);
+    }
+
+    @POST
+    @Path("user/watchlist/remove")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public String removeFromWatchlist(String input) {
+        JsonObject json = JsonParser.parseString(input).getAsJsonObject();
+        String username = json.get("username").getAsString();
+        Integer animeId = json.get("animeId").getAsInt();
+        UserDTO updatedUser = new UserDTO(FACADE.removeAnimeFromWatchList(username, animeId));
+        return GSON.toJson(updatedUser);
     }
 
 }
