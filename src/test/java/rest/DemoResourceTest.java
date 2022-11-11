@@ -65,6 +65,7 @@ class DemoResourceTest {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
+            em.createQuery("delete from Watchlist").executeUpdate();
             em.createQuery("delete from User").executeUpdate();
             em.createQuery("delete from Role").executeUpdate();
 

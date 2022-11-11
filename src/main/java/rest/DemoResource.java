@@ -157,9 +157,10 @@ public class DemoResource {
     }
 
     //TODO: Make endpoints to get anime (see AnimeFetcher)
-    @GET
+    @POST
     @Path("anime/single")
     @Produces("application/json")
+    @Consumes("application/json")
     public String getSingleAnime(String input) throws IOException {
         String name = JsonParser.parseString(input).getAsJsonObject()
                 .get("query").getAsString();
@@ -167,9 +168,10 @@ public class DemoResource {
         return GSON.toJson(animeDTO);
     }
 
-    @GET
+    @POST
     @Path("anime/multi")
     @Produces("application/json")
+    @Consumes("application/json")
     public String getMultiAnime(String input) throws IOException {
         String query = JsonParser.parseString(input).getAsJsonObject()
                 .get("query").getAsString();

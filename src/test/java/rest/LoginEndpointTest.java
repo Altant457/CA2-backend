@@ -66,6 +66,7 @@ public class LoginEndpointTest {
         try {
             em.getTransaction().begin();
             //Delete existing users and roles to get a "fresh" database
+            em.createQuery("delete from Watchlist").executeUpdate();
             em.createQuery("delete from User").executeUpdate();
             em.createQuery("delete from Role").executeUpdate();
 

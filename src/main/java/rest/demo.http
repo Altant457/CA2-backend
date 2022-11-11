@@ -26,7 +26,7 @@ Content-Type: application/json
 }
 
 ### getMultiAnime
-GET http://localhost:8080/ca2/api/info/anime/multi
+POST http://localhost:8080/ca2/api/info/anime/multi
 Content-Type: application/json
 Accept: application/json
 
@@ -35,7 +35,7 @@ Accept: application/json
 }
 
 ### getSingleAnime
-GET http://localhost:8080/ca2/api/info/anime/single
+POST http://localhost:8080/ca2/api/info/anime/single
 Content-Type: application/json
 Accept: application/json
 
