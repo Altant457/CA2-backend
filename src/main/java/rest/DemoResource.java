@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import dtos.AnimeDTO;
 import dtos.ComboDTO;
 import dtos.PokemonDTO;
 import dtos.RandomFactDTO;
@@ -28,6 +29,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 
 import facades.UserFacade;
+import utils.AnimeFetcher;
 import utils.EMF_Creator;
 import utils.FactFetcher;
 import utils.PokemonFetcher;
@@ -155,7 +157,7 @@ public class DemoResource {
     @Path("signup")
     @Consumes("application/json")
     @Produces("application/json")
-    public String createUser(String userJSON) { // input is the body of the request, generated in the frontend
+    public String createUser(String userJSON) {
         JsonObject json = JsonParser.parseString(userJSON).getAsJsonObject();
         String username = json.get("userName").getAsString();
         String password = json.get("userPass").getAsString();
@@ -165,6 +167,27 @@ public class DemoResource {
         return GSON.toJson(createdUser);
     }
 
-    //TODO: Make endpoint to get anime (see AnimeFetcher)
+    //TODO: Make endpoints to get anime (see AnimeFetcher)
+    @POST
+    @Path("anime/single")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public String getSingleAnime(String input) throws IOException {
+        String name = JsonParser.parseString(input).getAsJsonObject()
+                .get("query").getAsString();
+        AnimeDTO animeDTO = AnimeFetcher.getSingleData(name);
+        return GSON.toJson(animeDTO);
+    }
+
+    @POST
+    @Path("anime/multi")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public String getMultiAnime(String input) throws IOException {
+        String query = JsonParser.parseString(input).getAsJsonObject()
+                .get("query").getAsString();
+        List<AnimeDTO> animeDTOs = AnimeFetcher.getMultiData(query);
+        return GSON.toJson(animeDTOs);
+    }
 
 }

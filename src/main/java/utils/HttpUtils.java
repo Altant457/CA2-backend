@@ -32,11 +32,12 @@ public class HttpUtils {
     }
 
     public static String fetchAnime(String filter, boolean multi) throws IOException {
-        String limit = multi ? "20" : "1";
+        String url = multi ? "https://kitsu.io/api/edge/anime/?page%5Blimit%5D=20&filter%5Btext%5D="
+                : "https://kitsu.io/api/edge/anime/?page%5Blimit%5D=1&filter%5Btext%5D=";
         Client client = ClientBuilder.newClient();
-        String url = String.format("https://kitsu.io/api/edge/anime/?page[limit]=%s&filter[text]=%s", limit, filter);
-        String encodedURL = URLEncoder.encode(url, StandardCharsets.UTF_8.toString());
-        Response response = client.target(encodedURL).request().get();
+        String encodedFilter = URLEncoder.encode(filter, StandardCharsets.UTF_8.toString());
+        System.out.println(url+encodedFilter);
+        Response response = client.target(url+encodedFilter).request().get();
         return response.readEntity(String.class);
     }
 }

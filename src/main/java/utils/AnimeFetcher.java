@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dtos.AnimeDTO;
 
+import javax.ws.rs.WebApplicationException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,9 @@ public class AnimeFetcher {
         List<AnimeDTO> animeDTOs = new ArrayList<>();
         String res = HttpUtils.fetchAnime(query, true);
         JsonObject json = JsonParser.parseString(res).getAsJsonObject();
+        if (json.get("meta").getAsJsonObject().get("count").getAsInt() == 0) {
+            throw new WebApplicationException("No anime found", 404);
+        }
         for (int i = 0; i <= 19; i++) {
             String id = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                     .get("id").getAsString();
@@ -25,7 +29,11 @@ public class AnimeFetcher {
             String status = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                     .get("attributes").getAsJsonObject()
                     .get("status").getAsString();
-            animeDTOs.add(new AnimeDTO(id, name, year, status));
+            String posterURL = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
+                            .get("attributes").getAsJsonObject()
+                            .get("posterImage").getAsJsonObject()
+                            .get("original").getAsString();
+            animeDTOs.add(new AnimeDTO(id, name, year, status, posterURL));
         }
         return animeDTOs;
     }
@@ -44,6 +52,10 @@ public class AnimeFetcher {
         String status = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
                 .get("attributes").getAsJsonObject()
                 .get("status").getAsString();
-        return new AnimeDTO(id, name, year, status);
+        String posterURL = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
+                .get("attributes").getAsJsonObject()
+                .get("posterImage").getAsJsonObject()
+                .get("original").getAsString();
+        return new AnimeDTO(id, name, year, status, posterURL);
     }
 }
