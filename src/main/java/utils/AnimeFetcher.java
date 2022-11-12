@@ -19,7 +19,7 @@ public class AnimeFetcher {
         if (json.get("meta").getAsJsonObject().get("count").getAsInt() == 0) {
             throw new WebApplicationException("No anime found", 404);
         }
-        for (int i = 0; i <= 19; i++) {
+        for (int i = 0; i <= json.get("data").getAsJsonArray().size() - 1; i++) {
             Integer id = Integer.parseInt(json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                     .get("id").getAsString());
             String name = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
