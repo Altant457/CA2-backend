@@ -33,9 +33,9 @@ public class HttpUtils {
 
     public static String fetchAnime(String filter, boolean multi) throws IOException {
         String url = multi ? "https://kitsu.io/api/edge/anime/?page%5Blimit%5D=20&filter%5Btext%5D="
-                : "https://kitsu.io/api/edge/anime/?page%5Blimit%5D=1&filter%5Btext%5D=";
+                : "https://kitsu.io/api/edge/anime/";
         Client client = ClientBuilder.newClient();
-        String encodedFilter = URLEncoder.encode(filter, StandardCharsets.UTF_8.toString());
+        String encodedFilter = multi ? URLEncoder.encode(filter, StandardCharsets.UTF_8.toString()) : filter; // filter would be a number in the case of multi=false
         System.out.println("Request sent to: "+url+encodedFilter);
         Response response = client.target(url+encodedFilter).request().get();
         return response.readEntity(String.class);

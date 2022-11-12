@@ -164,7 +164,7 @@ public class DemoResource {
     @RolesAllowed({"user", "admin"})
     public String getSingleAnime(String input) throws IOException {
         String name = JsonParser.parseString(input).getAsJsonObject()
-                .get("query").getAsString();
+                .get("id").getAsString();
         AnimeDTO animeDTO = AnimeFetcher.getSingleData(name);
         return GSON.toJson(animeDTO);
     }

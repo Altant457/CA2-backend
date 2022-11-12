@@ -23,9 +23,9 @@ public class AnimeFetcher {
             String name = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                     .get("attributes").getAsJsonObject()
                     .get("canonicalTitle").getAsString();
-            String year = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
+            String startDate = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                     .get("attributes").getAsJsonObject()
-                    .get("startDate").getAsString().substring(0,4);
+                    .get("startDate").getAsString();
             String status = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                     .get("attributes").getAsJsonObject()
                     .get("status").getAsString();
@@ -36,7 +36,7 @@ public class AnimeFetcher {
             String synopsis = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                             .get("attributes").getAsJsonObject()
                             .get("synopsis").getAsString();
-            animeDTOs.add(new AnimeDTO(id, name, year, status, posterURL, synopsis));
+            animeDTOs.add(new AnimeDTO(id, name, startDate, status, posterURL, synopsis));
         }
         return animeDTOs;
     }
@@ -51,7 +51,7 @@ public class AnimeFetcher {
                 .get("canonicalTitle").getAsString();
         String year = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
                 .get("attributes").getAsJsonObject()
-                .get("startDate").getAsString().substring(0,4);
+                .get("startDate").getAsString();
         String status = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
                 .get("attributes").getAsJsonObject()
                 .get("status").getAsString();
