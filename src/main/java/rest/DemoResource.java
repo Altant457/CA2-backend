@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.nimbusds.jose.JOSEException;
 import dtos.*;
 import entities.Anime;
 import entities.User;
@@ -146,21 +147,21 @@ public class DemoResource {
     @Path("signup")
     @Consumes("application/json")
     @Produces("application/json")
-    public String createUser(String userJSON) {
+    public String createUser(String userJSON) throws JOSEException {
         JsonObject json = JsonParser.parseString(userJSON).getAsJsonObject();
         String username = json.get("userName").getAsString();
         String password = json.get("userPass").getAsString();
         User user = new User(username, password);
-        User createdUser = FACADE.createUser(user);
+        UserDTO createdUser = new UserDTO(FACADE.createUser(user));
 
         return GSON.toJson(createdUser);
     }
 
-    //TODO: Make endpoints to get anime (see AnimeFetcher)
     @POST
     @Path("anime/single")
     @Produces("application/json")
     @Consumes("application/json")
+    @RolesAllowed({"user", "admin"})
     public String getSingleAnime(String input) throws IOException {
         String name = JsonParser.parseString(input).getAsJsonObject()
                 .get("query").getAsString();
@@ -172,6 +173,7 @@ public class DemoResource {
     @Path("anime/multi")
     @Produces("application/json")
     @Consumes("application/json")
+    @RolesAllowed({"user", "admin"})
     public String getMultiAnime(String input) throws IOException {
         String query = JsonParser.parseString(input).getAsJsonObject()
                 .get("query").getAsString();
@@ -183,7 +185,8 @@ public class DemoResource {
     @Path("user/watchlist/add")
     @Produces("application/json")
     @Consumes("application/json")
-    public String addToWatchlist(String input) {
+    @RolesAllowed({"user", "admin"})
+    public String addToWatchlist(String input) throws JOSEException {
         JsonObject json = JsonParser.parseString(input).getAsJsonObject();
         String username = json.get("username").getAsString();
         Anime anime = GSON.fromJson(json.get("anime").getAsJsonObject(), Anime.class);
@@ -195,7 +198,8 @@ public class DemoResource {
     @Path("user/watchlist/remove")
     @Produces("application/json")
     @Consumes("application/json")
-    public String removeFromWatchlist(String input) {
+    @RolesAllowed({"user", "admin"})
+    public String removeFromWatchlist(String input) throws JOSEException {
         JsonObject json = JsonParser.parseString(input).getAsJsonObject();
         String username = json.get("username").getAsString();
         Integer animeId = json.get("animeId").getAsInt();

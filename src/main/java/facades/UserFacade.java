@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.WebApplicationException;
 
+import entities.Watchlist;
 import security.errorhandling.AuthenticationException;
 
 /**
@@ -51,7 +52,10 @@ public class UserFacade {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         Role userRole = new Role("user");
+        Watchlist watchlist = new Watchlist();
+        user.setWatchlist(watchlist);
         user.addRole(userRole);
+        em.persist(watchlist);
         em.persist(user);
         em.getTransaction().commit();
         return user;

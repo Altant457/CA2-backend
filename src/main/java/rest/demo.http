@@ -2,12 +2,12 @@ POST http://localhost:8080/ca2/api/login
 Content-Type: application/json
 
 {
-  "username": "admin",
-  "password": "JK123456"
+  "username": "user",
+  "password": "As123456"
 }
 ###
 GET http://localhost:8080/ca2/api/info/admin
-X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjoiYWRtaW4iLCJleHAiOjE2NjcyOTk5NzEsImlhdCI6MTY2NzI5ODE3MSwiaXNzdWVyIjoic2VtZXN0ZXJzdGFydGNvZGUtZGF0MyIsInVzZXJuYW1lIjoiYWRtaW4ifQ.TOIzMcm5xiGfORrc8Egv_v3--4a4jtdY355OQ6v2nfA
+X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MjQ2NzAyLCJpYXQiOjE2NjgyNDQ5MDIsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.s0EV1iC3EjNJ3eVk7nyb8UAIQHB08F5YDsGmgw8JxZE
 
 ### query is a string caontaining either the id of a pokémon or it's name
 POST http://localhost:8080/ca2/api/info/pokemon
@@ -29,6 +29,7 @@ Content-Type: application/json
 POST http://localhost:8080/ca2/api/info/anime/multi
 Content-Type: application/json
 Accept: application/json
+X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MjQ2NzAyLCJpYXQiOjE2NjgyNDQ5MDIsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.s0EV1iC3EjNJ3eVk7nyb8UAIQHB08F5YDsGmgw8JxZE
 
 {
   "query": "Cowboy Bebop"
@@ -38,15 +39,17 @@ Accept: application/json
 POST http://localhost:8080/ca2/api/info/anime/single
 Content-Type: application/json
 Accept: application/json
+X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MjQ2NzAyLCJpYXQiOjE2NjgyNDQ5MDIsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.s0EV1iC3EjNJ3eVk7nyb8UAIQHB08F5YDsGmgw8JxZE
 
 {
   "query": "Cowboy Bebop"
 }
 
-###
+### addAnimeToList
 POST http://localhost:8080/ca2/api/info/user/watchlist/add
 Content-Type: application/json
 Accept: application/json
+X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MjQ2NzAyLCJpYXQiOjE2NjgyNDQ5MDIsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.s0EV1iC3EjNJ3eVk7nyb8UAIQHB08F5YDsGmgw8JxZE
 
 {
   "username": "user",
@@ -59,12 +62,13 @@ Accept: application/json
   }
 }
 
-###
+### removeAnimeFromList
 POST http://localhost:8080/ca2/api/info/user/watchlist/remove
 Content-Type: application/json
 Accept: application/json
+X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MjQ2NzAyLCJpYXQiOjE2NjgyNDQ5MDIsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.s0EV1iC3EjNJ3eVk7nyb8UAIQHB08F5YDsGmgw8JxZE
 
 {
   "username": "user",
-  "animeId": 1
+  "animeId": 162
 }

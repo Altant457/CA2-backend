@@ -1,7 +1,9 @@
 package dtos;
 
+import com.nimbusds.jose.JOSEException;
 import entities.Role;
 import entities.User;
+import security.LoginEndpoint;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -18,10 +20,12 @@ public class UserDTO implements Serializable {
     @Size(min = 1, max = 255)
     private final String userName;
     private final List<RoleDTO> roleList = new ArrayList<>();
+    private final String token;
     private final WatchlistDTO watchList;
 
-    public UserDTO(User user) {
+    public UserDTO(User user) throws JOSEException {
         this.userName = user.getUserName();
+        this.token = LoginEndpoint.createToken(userName, user.getRolesAsStrings());
         for (Role role : user.getRoleList()) {
             roleList.add(new RoleDTO(role));
         }

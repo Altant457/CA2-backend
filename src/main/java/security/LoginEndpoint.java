@@ -66,7 +66,7 @@ public class LoginEndpoint {
         throw new AuthenticationException("Invalid username or password! Please try again");
     }
 
-    private String createToken(String userName, List<String> roles) throws JOSEException {
+    public static String createToken(String userName, List<String> roles) throws JOSEException {
 
         StringBuilder res = new StringBuilder();
         for (String string : roles) {
