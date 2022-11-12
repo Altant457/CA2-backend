@@ -1,5 +1,6 @@
 package facades;
 
+import com.nimbusds.jose.JOSEException;
 import entities.Anime;
 import entities.Role;
 import entities.User;
@@ -9,6 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.WebApplicationException;
 
 import entities.Watchlist;
+import security.LoginEndpoint;
 import security.errorhandling.AuthenticationException;
 
 import java.util.Arrays;
@@ -95,5 +97,11 @@ public class UserFacade {
         em.merge(user.getWatchlist());
         em.getTransaction().commit();
         return user;
+    }
+
+    public String updateToken(String username) throws JOSEException {
+        EntityManager em = emf.createEntityManager();
+        User user = em.find(User.class, username);
+        return LoginEndpoint.createToken(username, user.getRolesAsStrings());
     }
 }

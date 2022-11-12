@@ -18,6 +18,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
+import javax.json.Json;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
@@ -28,6 +29,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 
 import facades.UserFacade;
+import security.LoginEndpoint;
 import utils.AnimeFetcher;
 import utils.EMF_Creator;
 import utils.FactFetcher;
@@ -174,11 +176,12 @@ public class DemoResource {
     @Produces("application/json")
     @Consumes("application/json")
     @RolesAllowed({"user", "admin"})
-    public String getMultiAnime(String input) throws IOException {
-        String query = JsonParser.parseString(input).getAsJsonObject()
-                .get("query").getAsString();
-        List<AnimeDTO> animeDTOs = AnimeFetcher.getMultiData(query);
-        return GSON.toJson(animeDTOs);
+    public String getMultiAnime(String input) throws IOException, JOSEException {
+        JsonObject json = JsonParser.parseString(input).getAsJsonObject();
+        String query = json.get("query").getAsString();
+        String username = json.get("username").getAsString();
+        List<AnimeDTO> animeList = AnimeFetcher.getMultiData(query);
+        return GSON.toJson(new AnimeDTOs(animeList, FACADE.updateToken(username)));
     }
 
     @POST
