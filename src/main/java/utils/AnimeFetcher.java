@@ -25,13 +25,14 @@ public class AnimeFetcher {
             String name = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                     .get("attributes").getAsJsonObject()
                     .get("canonicalTitle").getAsString();
-            String startDate = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
-                    .get("attributes").getAsJsonObject()
-                    .get("startDate").getAsString();
             String status = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                     .get("attributes").getAsJsonObject()
                     .get("status").getAsString();
-            String endDate = (Objects.equals(status, "current")) ? "" :
+            String startDate = (Objects.equals(status, "tba")) ? "" :
+                    json.get("data").getAsJsonArray().get(i).getAsJsonObject()
+                            .get("attributes").getAsJsonObject()
+                            .get("startDate").getAsString();
+            String endDate = (Objects.equals(status, "current")) || Objects.equals(status, "tba") ? "" :
                     json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                             .get("attributes").getAsJsonObject()
                             .get("endDate").getAsString();
