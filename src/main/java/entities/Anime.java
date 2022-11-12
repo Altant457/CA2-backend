@@ -17,6 +17,8 @@ public class Anime {
     private String status;
     @Column(name = "posterURL", nullable = false)
     private String posterURL;
+    @Column(name = "synopsis", nullable = false)
+    private String synopsis;
     @ManyToMany(mappedBy = "animeList")
     private Set<Watchlist> watchlists = new LinkedHashSet<>();
 
@@ -36,6 +38,14 @@ public class Anime {
 
     public void setWatchlists(Set<Watchlist> watchlists) {
         this.watchlists = watchlists;
+    }
+
+    public String getSynopsis() {
+        return synopsis;
+    }
+
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
     }
 
     public Integer getId() {

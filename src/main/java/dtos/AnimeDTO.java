@@ -8,13 +8,15 @@ public class AnimeDTO {
     private final String year;
     private final String status;
     private final String posterURL;
+    private final String synopsis;
 
-    public AnimeDTO(Integer id, String name, String year, String status, String posterURL) {
+    public AnimeDTO(Integer id, String name, String year, String status, String posterURL, String synopsis) {
         this.id = id;
         this.name = name;
         this.year = year;
         this.status = status;
         this.posterURL = posterURL;
+        this.synopsis = synopsis;
     }
 
     public AnimeDTO(Anime anime) {
@@ -23,5 +25,6 @@ public class AnimeDTO {
         this.year = anime.getYear();
         this.status = anime.getStatus();
         this.posterURL = anime.getPosterURL();
+        this.synopsis = anime.getSynopsis();
     }
 }

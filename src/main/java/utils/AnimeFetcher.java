@@ -33,7 +33,10 @@ public class AnimeFetcher {
                             .get("attributes").getAsJsonObject()
                             .get("posterImage").getAsJsonObject()
                             .get("large").getAsString();
-            animeDTOs.add(new AnimeDTO(id, name, year, status, posterURL));
+            String synopsis = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
+                            .get("attributes").getAsJsonObject()
+                            .get("synopsis").getAsString();
+            animeDTOs.add(new AnimeDTO(id, name, year, status, posterURL, synopsis));
         }
         return animeDTOs;
     }
@@ -56,6 +59,9 @@ public class AnimeFetcher {
                 .get("attributes").getAsJsonObject()
                 .get("posterImage").getAsJsonObject()
                 .get("original").getAsString();
-        return new AnimeDTO(id, name, year, status, posterURL);
+        String synopsis = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
+                .get("attributes").getAsJsonObject()
+                .get("synopsis").getAsString();
+        return new AnimeDTO(id, name, year, status, posterURL, synopsis);
     }
 }
