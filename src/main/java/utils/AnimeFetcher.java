@@ -32,7 +32,7 @@ public class AnimeFetcher {
             String posterURL = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                             .get("attributes").getAsJsonObject()
                             .get("posterImage").getAsJsonObject()
-                            .get("large").getAsString();
+                            .get("small").getAsString();
             String synopsis = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                             .get("attributes").getAsJsonObject()
                             .get("synopsis").getAsString();
