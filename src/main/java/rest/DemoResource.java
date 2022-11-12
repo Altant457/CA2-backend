@@ -149,7 +149,7 @@ public class DemoResource {
     @Produces("application/json")
     public String createUser(String userJSON) throws JOSEException {
         JsonObject json = JsonParser.parseString(userJSON).getAsJsonObject();
-        String username = json.get("userName").getAsString();
+        String username = json.get("userName").getAsString().toLowerCase();
         String password = json.get("userPass").getAsString();
         User user = new User(username, password);
         UserDTO createdUser = new UserDTO(FACADE.createUser(user));
@@ -188,7 +188,7 @@ public class DemoResource {
     @RolesAllowed({"user", "admin"})
     public String addToWatchlist(String input) throws JOSEException {
         JsonObject json = JsonParser.parseString(input).getAsJsonObject();
-        String username = json.get("username").getAsString();
+        String username = json.get("username").getAsString().toLowerCase();
         Anime anime = GSON.fromJson(json.get("anime").getAsJsonObject(), Anime.class);
         UserDTO updatedUser = new UserDTO(FACADE.addAnimeToWatchList(username, anime));
         return GSON.toJson(updatedUser);
@@ -201,7 +201,7 @@ public class DemoResource {
     @RolesAllowed({"user", "admin"})
     public String removeFromWatchlist(String input) throws JOSEException {
         JsonObject json = JsonParser.parseString(input).getAsJsonObject();
-        String username = json.get("username").getAsString();
+        String username = json.get("username").getAsString().toLowerCase();
         Integer animeId = json.get("animeId").getAsInt();
         UserDTO updatedUser = new UserDTO(FACADE.removeAnimeFromWatchList(username, animeId));
         return GSON.toJson(updatedUser);

@@ -10,7 +10,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 @Entity
 @Table(name = "users")
-public class  User implements Serializable {
+public class User implements Serializable {
 
   private static final long serialVersionUID = 1L;
   @Id
@@ -45,16 +45,10 @@ public class  User implements Serializable {
 
   public User() {}
 
-  //TODO Change when password is hashed
-
    public boolean verifyPassword(String pw){
         return(BCrypt.checkpw(pw, this.userPass));
     }
-//   public boolean verifyPassword(String pw){
-//        return pw.equals(this.userPass);
-//    }
 
-  //TODO add extra userpass and check if alike
   public User(String userName, String userPass) {
     this.userName = userName;
     this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt());
@@ -62,7 +56,7 @@ public class  User implements Serializable {
 
 
   public String getUserName() {
-    return userName;
+    return this.userName;
   }
 
   public void setUserName(String userName) {

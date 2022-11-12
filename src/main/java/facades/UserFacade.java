@@ -11,6 +11,8 @@ import javax.ws.rs.WebApplicationException;
 import entities.Watchlist;
 import security.errorhandling.AuthenticationException;
 
+import java.util.Arrays;
+
 /**
  * @author lam@cphbusiness.dk
  */
@@ -63,9 +65,9 @@ public class UserFacade {
 
     public User addAnimeToWatchList(String username, Anime anime) {
         EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        User user = em.find(User.class, username);
         try {
-            em.getTransaction().begin();
-            User user = em.find(User.class, username);
             user.getWatchlist().addAnimeToList(anime);
             if (em.find(Anime.class, anime.getId()) == null) {
                 em.persist(anime);
@@ -76,9 +78,8 @@ public class UserFacade {
             em.merge(user.getWatchlist());
             em.getTransaction().commit();
             return user;
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
+        } catch (NullPointerException e) {
+            throw new WebApplicationException("Internal Server Error", 500);
         }
     }
 
