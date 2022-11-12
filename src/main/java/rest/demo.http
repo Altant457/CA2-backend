@@ -29,17 +29,17 @@ Content-Type: application/json
 POST http://localhost:8080/ca2/api/info/anime/multi
 Content-Type: application/json
 Accept: application/json
-X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MjQ2NzAyLCJpYXQiOjE2NjgyNDQ5MDIsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.s0EV1iC3EjNJ3eVk7nyb8UAIQHB08F5YDsGmgw8JxZE
+X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MjgwODEzLCJpYXQiOjE2NjgyNzkwMTMsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.XqbXC5u5CkrKcAuVR2fjcwZpsrvr2yyJkIKVJ7Hy_Os
 
 {
-  "query": "Cowboy Bebop"
+  "query": "Initial D"
 }
 
 ### getSingleAnime
 POST http://localhost:8080/ca2/api/info/anime/single
 Content-Type: application/json
 Accept: application/json
-X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MjQ2NzAyLCJpYXQiOjE2NjgyNDQ5MDIsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.s0EV1iC3EjNJ3eVk7nyb8UAIQHB08F5YDsGmgw8JxZE
+X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MjgwODEzLCJpYXQiOjE2NjgyNzkwMTMsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.XqbXC5u5CkrKcAuVR2fjcwZpsrvr2yyJkIKVJ7Hy_Os
 
 {
   "query": "Cowboy Bebop"
@@ -49,16 +49,18 @@ X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXh
 POST http://localhost:8080/ca2/api/info/user/watchlist/add
 Content-Type: application/json
 Accept: application/json
-X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MjQ2NzAyLCJpYXQiOjE2NjgyNDQ5MDIsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.s0EV1iC3EjNJ3eVk7nyb8UAIQHB08F5YDsGmgw8JxZE
+X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MjgwODEzLCJpYXQiOjE2NjgyNzkwMTMsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.XqbXC5u5CkrKcAuVR2fjcwZpsrvr2yyJkIKVJ7Hy_Os
 
 {
   "username": "user",
   "anime": {
     "id": 162,
     "name": "Initial D First Stage",
-    "year": "1998",
+    "startDate": "1998-04-19",
+    "endDate": "1998-12-06",
     "status": "finished",
-    "posterURL": "https://media.kitsu.io/anime/poster_images/162/original.png"
+    "posterURL": "https://media.kitsu.io/anime/poster_images/162/small.png",
+    "synopsis": "Takumi Fujiwara is an aloof, spacey high-schooler who does delivery runs in his dad's Toyota AE86 in the dead of night. Despite working at a gas station and having friends who are car nuts, he doesn't know a single thing about cars.\nTakumi is introduced into the world of street racing and his natural talent draws attention from all across Gunma. Will Takumi face the challenges or back out from the call of the mountain passes?"
   }
 }
 
@@ -66,7 +68,7 @@ X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXh
 POST http://localhost:8080/ca2/api/info/user/watchlist/remove
 Content-Type: application/json
 Accept: application/json
-X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MjQ2NzAyLCJpYXQiOjE2NjgyNDQ5MDIsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.s0EV1iC3EjNJ3eVk7nyb8UAIQHB08F5YDsGmgw8JxZE
+X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MjgwODEzLCJpYXQiOjE2NjgyNzkwMTMsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.XqbXC5u5CkrKcAuVR2fjcwZpsrvr2yyJkIKVJ7Hy_Os
 
 {
   "username": "user",

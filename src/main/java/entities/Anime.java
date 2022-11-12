@@ -11,8 +11,10 @@ public class Anime {
     private Integer id;
     @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "year", nullable = false)
-    private String year;
+    @Column(name = "startDate", nullable = false)
+    private String startDate;
+    @Column(name = "endDate", nullable = false)
+    private String endDate;
     @Column(name = "status", nullable = false)
     private String status;
     @Column(name = "posterURL", nullable = false)
@@ -24,10 +26,11 @@ public class Anime {
 
     public Anime(){}
 
-    public Anime(Integer id, String name, String year, String status, String posterURL) {
+    public Anime(Integer id, String name, String startDate, String endDate, String status, String posterURL) {
         this.id = id;
         this.name = name;
-        this.year = year;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.status = status;
         this.posterURL = posterURL;
     }
@@ -64,12 +67,20 @@ public class Anime {
         this.name = name;
     }
 
-    public String getYear() {
-        return year;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     public String getStatus() {
@@ -93,24 +104,14 @@ public class Anime {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Anime anime = (Anime) o;
-        return id.equals(anime.id) && name.equals(anime.name)
-                && year.equals(anime.year) && status.equals(anime.status)
-                && posterURL.equals(anime.posterURL);
+        return id.equals(anime.id) && name.equals(anime.name) &&
+                startDate.equals(anime.startDate) && endDate.equals(anime.endDate) &&
+                status.equals(anime.status) && posterURL.equals(anime.posterURL) &&
+                synopsis.equals(anime.synopsis) && watchlists.equals(anime.watchlists);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, year, status, posterURL);
-    }
-
-    @Override
-    public String toString() {
-        return "Anime{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", year='" + year + '\'' +
-                ", status='" + status + '\'' +
-                ", posterURL='" + posterURL + '\'' +
-                '}';
+        return Objects.hash(id, name, startDate, endDate, status, posterURL, synopsis, watchlists);
     }
 }

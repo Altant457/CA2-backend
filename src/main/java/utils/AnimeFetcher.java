@@ -8,6 +8,7 @@ import javax.ws.rs.WebApplicationException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AnimeFetcher {
     public static List<AnimeDTO> getMultiData(String query) throws IOException {
@@ -29,6 +30,10 @@ public class AnimeFetcher {
             String status = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                     .get("attributes").getAsJsonObject()
                     .get("status").getAsString();
+            String endDate = (Objects.equals(status, "current")) ? "" :
+                    json.get("data").getAsJsonArray().get(i).getAsJsonObject()
+                            .get("attributes").getAsJsonObject()
+                            .get("endDate").getAsString();
             String posterURL = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                             .get("attributes").getAsJsonObject()
                             .get("posterImage").getAsJsonObject()
@@ -36,7 +41,7 @@ public class AnimeFetcher {
             String synopsis = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                             .get("attributes").getAsJsonObject()
                             .get("synopsis").getAsString();
-            animeDTOs.add(new AnimeDTO(id, name, startDate, status, posterURL, synopsis));
+            animeDTOs.add(new AnimeDTO(id, name, startDate, endDate, status, posterURL, synopsis));
         }
         return animeDTOs;
     }
@@ -49,12 +54,16 @@ public class AnimeFetcher {
         String name = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
                 .get("attributes").getAsJsonObject()
                 .get("canonicalTitle").getAsString();
-        String year = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
+        String startDate = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
                 .get("attributes").getAsJsonObject()
                 .get("startDate").getAsString();
         String status = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
                 .get("attributes").getAsJsonObject()
                 .get("status").getAsString();
+        String endDate = (Objects.equals(status, "current")) ? "" :
+                json.get("data").getAsJsonArray().get(0).getAsJsonObject()
+                        .get("attributes").getAsJsonObject()
+                        .get("endDate").getAsString();
         String posterURL = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
                 .get("attributes").getAsJsonObject()
                 .get("posterImage").getAsJsonObject()
@@ -62,6 +71,6 @@ public class AnimeFetcher {
         String synopsis = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
                 .get("attributes").getAsJsonObject()
                 .get("synopsis").getAsString();
-        return new AnimeDTO(id, name, year, status, posterURL, synopsis);
+        return new AnimeDTO(id, name, startDate, endDate, status, posterURL, synopsis);
     }
 }
