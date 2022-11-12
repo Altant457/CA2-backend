@@ -42,14 +42,9 @@ public class AnimeFetcher {
             JsonElement synopsisObj = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                             .get("attributes").getAsJsonObject()
                             .get("synopsis");
-//            String synopsis = (synopsisObj != null && !synopsisObj.isJsonNull()) ?
-//                    !Objects.equals(synopsisObj.getAsString(), "") ?
-//                            synopsisObj.getAsString() : "No synopsis available" : "No synopsis available";
-            String synopsis = "No synopsis available";
-            if (synopsisObj != null && !synopsisObj.isJsonNull()) {
-                if (!Objects.equals(synopsisObj.getAsString(), "")) {
-                    synopsis = synopsisObj.getAsString();
-                }
+            String synopsis = (synopsisObj != null && !synopsisObj.isJsonNull()) ? synopsisObj.getAsString() : "No synopsis available";
+            if (synopsis.equals("")) {
+                synopsis = "No synopsis available";
             }
             animeDTOs.add(new AnimeDTO(id, name, startDate, endDate, status, posterURL, synopsis));
         }
