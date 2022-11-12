@@ -1,5 +1,6 @@
 package utils;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dtos.AnimeDTO;
@@ -38,9 +39,10 @@ public class AnimeFetcher {
                             .get("attributes").getAsJsonObject()
                             .get("posterImage").getAsJsonObject()
                             .get("small").getAsString();
-            String synopsis = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
+            JsonElement synopsisObj = json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                             .get("attributes").getAsJsonObject()
-                            .get("synopsis").getAsString();
+                            .get("synopsis");
+            String synopsis = synopsisObj != null ? synopsisObj.getAsString() : "No synopsis available";
             animeDTOs.add(new AnimeDTO(id, name, startDate, endDate, status, posterURL, synopsis));
         }
         return animeDTOs;

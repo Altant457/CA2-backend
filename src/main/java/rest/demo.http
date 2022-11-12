@@ -32,7 +32,7 @@ Accept: application/json
 X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MjgwODEzLCJpYXQiOjE2NjgyNzkwMTMsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.XqbXC5u5CkrKcAuVR2fjcwZpsrvr2yyJkIKVJ7Hy_Os
 
 {
-  "query": "Initial D"
+  "query": "one piece"
 }
 
 ### getSingleAnime
