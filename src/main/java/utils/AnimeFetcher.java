@@ -32,7 +32,7 @@ public class AnimeFetcher {
                     json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                             .get("attributes").getAsJsonObject()
                             .get("startDate").getAsString();
-            String endDate = (Objects.equals(status, "current")) || Objects.equals(status, "tba") ? "" :
+            String endDate = Objects.equals(status, "current") || Objects.equals(status, "tba") || Objects.equals(status, "unreleased") ? "" :
                     json.get("data").getAsJsonArray().get(i).getAsJsonObject()
                             .get("attributes").getAsJsonObject()
                             .get("endDate").getAsString();
