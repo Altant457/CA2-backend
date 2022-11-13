@@ -1,7 +1,6 @@
 package facades;
 
 import com.nimbusds.jose.JOSEException;
-import dtos.WatchlistDTO;
 import dtos.WatchlistTokenDTO;
 import entities.Anime;
 import entities.Role;
@@ -14,8 +13,6 @@ import javax.ws.rs.WebApplicationException;
 import entities.Watchlist;
 import security.LoginEndpoint;
 import security.errorhandling.AuthenticationException;
-
-import java.util.Arrays;
 
 /**
  * @author lam@cphbusiness.dk
@@ -56,18 +53,22 @@ public class UserFacade {
 
     public User createUser(User user) {
         EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        Role userRole = new Role("user");
-        Watchlist watchlist = new Watchlist();
-        user.setWatchlist(watchlist);
-        user.addRole(userRole);
-        em.persist(watchlist);
-        em.persist(user);
-        em.getTransaction().commit();
-        return user;
+        try {
+            em.getTransaction().begin();
+            Role userRole = new Role("user");
+            Watchlist watchlist = new Watchlist();
+            user.setWatchlist(watchlist);
+            user.addRole(userRole);
+            em.persist(watchlist);
+            em.persist(user);
+            em.getTransaction().commit();
+            return user;
+        } finally {
+            em.close();
+        }
     }
 
-    public User addAnimeToWatchList(String username, Anime anime) {
+    public WatchlistTokenDTO addAnimeToWatchList(String username, Anime anime) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         User user = em.find(User.class, username);
@@ -81,36 +82,50 @@ public class UserFacade {
             em.merge(user);
             em.merge(user.getWatchlist());
             em.getTransaction().commit();
-            return user;
-        } catch (NullPointerException e) {
+            return new WatchlistTokenDTO(user.getWatchlist(), LoginEndpoint.createToken(username, user.getRolesAsStrings()));
+        } catch (NullPointerException | JOSEException e) {
             throw new WebApplicationException("Internal Server Error", 500);
+        } finally {
+            em.close();
         }
     }
 
-    public User removeAnimeFromWatchList(String username, Integer animeID) {
+    public WatchlistTokenDTO removeAnimeFromWatchList(String username, Integer animeID) throws JOSEException {
         EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        User user = em.find(User.class, username);
-        Anime anime = em.find(Anime.class, animeID);
-        if (anime == null) throw new WebApplicationException("Watchlist item does not exist", 404);
-        user.getWatchlist().removeAnimeFromList(anime);
-        em.merge(user);
-        em.merge(anime);
-        em.merge(user.getWatchlist());
-        em.getTransaction().commit();
-        return user;
+        try {
+            em.getTransaction().begin();
+            User user = em.find(User.class, username);
+            Anime anime = em.find(Anime.class, animeID);
+            if (anime == null) throw new WebApplicationException("Watchlist item does not exist", 404);
+            user.getWatchlist().removeAnimeFromList(anime);
+            em.merge(user);
+            em.merge(anime);
+            em.merge(user.getWatchlist());
+            em.getTransaction().commit();
+            return new WatchlistTokenDTO(user.getWatchlist(), updateToken(username));
+        } finally {
+            em.close();
+        }
     }
 
     public String updateToken(String username) throws JOSEException {
         EntityManager em = emf.createEntityManager();
-        User user = em.find(User.class, username);
-        return LoginEndpoint.createToken(username, user.getRolesAsStrings());
+        try {
+            User user = em.find(User.class, username);
+            return LoginEndpoint.createToken(username, user.getRolesAsStrings());
+        } finally {
+            em.close();
+        }
     }
 
     public WatchlistTokenDTO getWatchlist(String username) throws JOSEException {
         EntityManager em = emf.createEntityManager();
-        User user = em.find(User.class, username);
-        System.out.println(user.getWatchlist());
-        return new WatchlistTokenDTO(user.getWatchlist(), LoginEndpoint.createToken(username, user.getRolesAsStrings()));
+        try {
+            User user = em.find(User.class, username);
+            System.out.println(user.getWatchlist());
+            return new WatchlistTokenDTO(user.getWatchlist(), updateToken(username));
+        } finally {
+            em.close();
+        }
     }
 }

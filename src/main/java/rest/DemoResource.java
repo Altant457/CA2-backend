@@ -177,12 +177,11 @@ public class DemoResource {
     @Produces("application/json")
     @Consumes("application/json")
     @RolesAllowed({"user", "admin"})
-    public String addToWatchlist(String input) throws JOSEException {
+    public String addToWatchlist(String input) {
         JsonObject json = JsonParser.parseString(input).getAsJsonObject();
         String username = json.get("username").getAsString().toLowerCase();
         Anime anime = GSON.fromJson(json.get("anime").getAsJsonObject(), Anime.class);
-        UserDTO updatedUser = new UserDTO(FACADE.addAnimeToWatchList(username, anime));
-        return GSON.toJson(updatedUser);
+        return GSON.toJson(FACADE.addAnimeToWatchList(username, anime));
     }
 
     @POST
@@ -194,8 +193,7 @@ public class DemoResource {
         JsonObject json = JsonParser.parseString(input).getAsJsonObject();
         String username = json.get("username").getAsString().toLowerCase();
         Integer animeId = json.get("animeId").getAsInt();
-        UserDTO updatedUser = new UserDTO(FACADE.removeAnimeFromWatchList(username, animeId));
-        return GSON.toJson(updatedUser);
+        return GSON.toJson(FACADE.removeAnimeFromWatchList(username, animeId));
     }
 
     @POST
