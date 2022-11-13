@@ -9,7 +9,7 @@ Content-Type: application/json
 GET http://localhost:8080/ca2/api/info/admin
 X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MjQ2NzAyLCJpYXQiOjE2NjgyNDQ5MDIsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.s0EV1iC3EjNJ3eVk7nyb8UAIQHB08F5YDsGmgw8JxZE
 
-### query is a string caontaining either the id of a pokémon or it's name
+### query is a string containing either the id of a pokémon or it's name
 POST http://localhost:8080/ca2/api/info/pokemon
 Content-Type: application/json
 
@@ -49,7 +49,7 @@ X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXh
 POST http://localhost:8080/ca2/api/info/user/watchlist/add
 Content-Type: application/json
 Accept: application/json
-X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MjgwODEzLCJpYXQiOjE2NjgyNzkwMTMsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.XqbXC5u5CkrKcAuVR2fjcwZpsrvr2yyJkIKVJ7Hy_Os
+X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MzQ4Mjc1LCJpYXQiOjE2NjgzNDY0NzUsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.M1ufmB5SSNxRMJSX-Y4lamRf5OMrQzrBxZB8p6idnlc
 
 {
   "username": "user",
@@ -73,4 +73,14 @@ X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXh
 {
   "username": "user",
   "animeId": 162
+}
+
+### getWatchlist
+POST http://localhost:8080/ca2/api/info/user/watchlist
+Content-Type: application/json
+Accept: application/json
+X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJ1c2VyIiwiZXhwIjoxNjY4MzQ4Mjc1LCJpYXQiOjE2NjgzNDY0NzUsImlzc3VlciI6InNlbWVzdGVyc3RhcnRjb2RlLWRhdDMiLCJ1c2VybmFtZSI6InVzZXIifQ.M1ufmB5SSNxRMJSX-Y4lamRf5OMrQzrBxZB8p6idnlc
+
+{
+  "username": "user"
 }

@@ -51,32 +51,4 @@ public class AnimeFetcher {
         }
         return animeDTOs;
     }
-
-    public static AnimeDTO getSingleData(String sname) throws IOException {
-        String res = HttpUtils.fetchAnime(sname, false);
-        JsonObject json = JsonParser.parseString(res).getAsJsonObject();
-        Integer id = Integer.parseInt(json.get("data").getAsJsonArray().get(0).getAsJsonObject()
-                .get("id").getAsString());
-        String name = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
-                .get("attributes").getAsJsonObject()
-                .get("canonicalTitle").getAsString();
-        String startDate = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
-                .get("attributes").getAsJsonObject()
-                .get("startDate").getAsString();
-        String status = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
-                .get("attributes").getAsJsonObject()
-                .get("status").getAsString();
-        String endDate = (Objects.equals(status, "current")) ? "" :
-                json.get("data").getAsJsonArray().get(0).getAsJsonObject()
-                        .get("attributes").getAsJsonObject()
-                        .get("endDate").getAsString();
-        String posterURL = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
-                .get("attributes").getAsJsonObject()
-                .get("posterImage").getAsJsonObject()
-                .get("original").getAsString();
-        String synopsis = json.get("data").getAsJsonArray().get(0).getAsJsonObject()
-                .get("attributes").getAsJsonObject()
-                .get("synopsis").getAsString();
-        return new AnimeDTO(id, name, startDate, endDate, status, posterURL, synopsis);
-    }
 }

@@ -1,6 +1,8 @@
 package facades;
 
 import com.nimbusds.jose.JOSEException;
+import dtos.WatchlistDTO;
+import dtos.WatchlistTokenDTO;
 import entities.Anime;
 import entities.Role;
 import entities.User;
@@ -103,5 +105,12 @@ public class UserFacade {
         EntityManager em = emf.createEntityManager();
         User user = em.find(User.class, username);
         return LoginEndpoint.createToken(username, user.getRolesAsStrings());
+    }
+
+    public WatchlistTokenDTO getWatchlist(String username) throws JOSEException {
+        EntityManager em = emf.createEntityManager();
+        User user = em.find(User.class, username);
+        System.out.println(user.getWatchlist());
+        return new WatchlistTokenDTO(user.getWatchlist(), LoginEndpoint.createToken(username, user.getRolesAsStrings()));
     }
 }

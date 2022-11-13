@@ -3,43 +3,40 @@ package dtos;
 import entities.Anime;
 import entities.Watchlist;
 
-import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- * A DTO for the {@link entities.Watchlist} entity
- */
-public class WatchlistDTO implements Serializable {
-    private final Set<AnimeDTO> animeList = new LinkedHashSet<>();
+public class WatchlistTokenDTO {
 
-    public WatchlistDTO(Watchlist watchlist) {
+    private final Set<AnimeDTO> animeList = new LinkedHashSet<>();
+    private final String token;
+
+    public WatchlistTokenDTO(Watchlist watchlist, String token) {
         for (Anime anime : watchlist.getAnimeList()) {
             animeList.add(new AnimeDTO(anime));
         }
-    }
-
-    public Set<AnimeDTO> getAnimeList() {
-        return animeList;
+        this.token = token;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        WatchlistDTO entity = (WatchlistDTO) o;
-        return Objects.equals(this.animeList, entity.animeList);
+        WatchlistTokenDTO that = (WatchlistTokenDTO) o;
+        return animeList.equals(that.animeList) && token.equals(that.token);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(animeList);
+        return Objects.hash(animeList, token);
     }
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "animeList = " + animeList + ")";
+        return "WatchlistTokenDTO{" +
+                "animeList=" + animeList +
+                ", token='" + token + '\'' +
+                '}';
     }
 }

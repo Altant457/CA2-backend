@@ -160,18 +160,6 @@ public class DemoResource {
     }
 
     @POST
-    @Path("anime/single")
-    @Produces("application/json")
-    @Consumes("application/json")
-    @RolesAllowed({"user", "admin"})
-    public String getSingleAnime(String input) throws IOException {
-        String name = JsonParser.parseString(input).getAsJsonObject()
-                .get("id").getAsString();
-        AnimeDTO animeDTO = AnimeFetcher.getSingleData(name);
-        return GSON.toJson(animeDTO);
-    }
-
-    @POST
     @Path("anime/multi")
     @Produces("application/json")
     @Consumes("application/json")
@@ -208,6 +196,17 @@ public class DemoResource {
         Integer animeId = json.get("animeId").getAsInt();
         UserDTO updatedUser = new UserDTO(FACADE.removeAnimeFromWatchList(username, animeId));
         return GSON.toJson(updatedUser);
+    }
+
+    @POST
+    @Path("user/watchlist")
+    @Produces("application/json")
+    @Consumes("application/json")
+    @RolesAllowed({"user", "admin"})
+    public String getWatchlist(String input) throws JOSEException {
+        JsonObject json = JsonParser.parseString(input).getAsJsonObject();
+        String username = json.get("username").getAsString().toLowerCase();
+        return GSON.toJson(FACADE.getWatchlist(username));
     }
 
 }
