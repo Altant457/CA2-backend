@@ -122,7 +122,6 @@ public class UserFacade {
         EntityManager em = emf.createEntityManager();
         try {
             User user = em.find(User.class, username);
-            System.out.println(user.getWatchlist());
             return new WatchlistTokenDTO(user.getWatchlist(), updateToken(username));
         } finally {
             em.close();
