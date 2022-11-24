@@ -15,9 +15,7 @@ public class WatchlistDTO implements Serializable {
     private final Set<AnimeDTO> animeList = new LinkedHashSet<>();
 
     public WatchlistDTO(Watchlist watchlist) {
-        for (Anime anime : watchlist.getAnimeList()) {
-            animeList.add(new AnimeDTO(anime));
-        }
+        watchlist.getAnimeList().forEach(anime -> animeList.add(new AnimeDTO(anime)));
     }
 
     public Set<AnimeDTO> getAnimeList() {
